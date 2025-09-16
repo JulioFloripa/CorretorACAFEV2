@@ -1,32 +1,27 @@
-# Build stage
-FROM node:18-alpine as build
-
-# Definir diretório de trabalho
+# Etapa 1: Build do React
+FROM node:18 AS build
 WORKDIR /app
 
-# Copiar package.json e package-lock.json
+# Copiar arquivos de dependência e instalar
 COPY package*.json ./
+RUN npm install
 
-# Instalar dependências
-RUN npm ci --only=production
-
-# Copiar código fonte
+# Copiar todo o projeto e gerar o build
 COPY . .
-
-# Build da aplicação
 RUN npm run build
 
-# Production stage
+# Etapa 2: Servir com Nginx
 FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
 
-# Copiar arquivos buildados
+# Copiar os arquivos buildados do React
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Copiar configuração customizada do nginx
+# Copiar a configuração customizada do Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expor porta
+# Cloud Run exige que o container escute na porta 8080
 EXPOSE 8080
 
-# Comando para executar
+# Rodar o Nginx em foreground
 CMD ["nginx", "-g", "daemon off;"]
