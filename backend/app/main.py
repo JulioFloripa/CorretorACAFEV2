@@ -217,7 +217,7 @@ async def download_todos_pdfs(processo_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao criar ZIP: {str(e)}")
 
-@app.get("/api/template-excel")
+@app.get("/template-excel")
 async def download_template():
     """Download do template Excel"""
     file_path = os.path.join("static", "template_simulado_acafe.xlsx")
