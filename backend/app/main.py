@@ -220,19 +220,12 @@ async def download_todos_pdfs(processo_id: str):
 @app.get("/api/template-excel")
 async def download_template():
     """Download do template Excel"""
-    
-    try:
-        gerador = GeradorPDF()
-        template_path = gerador.criar_template_excel()
-        
-        return FileResponse(
-            template_path,
-            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            filename="template_simulado_acafe.xlsx"
-        )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao gerar template: {str(e)}")
+    file_path = os.path.join("static", "template_simulado_acafe.xlsx")
+    return FileResponse(
+        file_path,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        filename="template_simulado_acafe.xlsx"
+    )
 
 @app.delete("/api/limpar/{processo_id}")
 async def limpar_processo(processo_id: str):
