@@ -219,8 +219,14 @@ async def download_todos_pdfs(processo_id: str):
 
 @app.get("/api/template-excel")
 async def download_template():
-    """Download do template Excel"""
-    file_path = os.path.join("static", "template_simulado_acafe.xlsx")
+    """Download do template Excel fixo"""
+
+    # Caminho absoluto para o arquivo dentro do container
+    file_path = os.path.join(os.path.dirname(__file__), "static", "template_simulado_acafe.xlsx")
+
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Template não encontrado")
+
     return FileResponse(
         file_path,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
