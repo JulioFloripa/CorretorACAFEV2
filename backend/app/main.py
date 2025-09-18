@@ -219,10 +219,10 @@ async def download_todos_pdfs(processo_id: str):
 
 @app.get("/api/template-excel")
 async def download_template():
-    """Download do template Excel fixo"""
+    """Download do template Excel"""
 
-    # Caminho absoluto para o arquivo dentro do container
-    file_path = os.path.join(os.path.dirname(__file__), "static", "template_simulado_acafe.xlsx")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, "..", "static", "template_simulado_acafe.xlsx")
 
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Template não encontrado")

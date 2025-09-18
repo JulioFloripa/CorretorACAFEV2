@@ -20,6 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar código da aplicação
 COPY . .
 
+# Copiar explicitamente a pasta static (mesmo que já venha acima, é garantido)
+COPY static ./static
+
 # Expor porta
 EXPOSE 8080
 
