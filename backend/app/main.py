@@ -40,7 +40,7 @@ async def root():
         "status": "online"
     }
 
-@app.post("/upload")
+@app.post("/api/upload")
 async def upload_arquivo(file: UploadFile = File(...)):
     """Upload e validação inicial do arquivo Excel"""
     
