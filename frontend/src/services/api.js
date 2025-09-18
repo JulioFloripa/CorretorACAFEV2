@@ -170,14 +170,14 @@ export const downloadAllPdfs = async (processId) => {
 // Download do template Excel
 export const downloadTemplate = async () => {
   try {
-    const resp = await api.get('/template-excel', { responseType: 'blob' });
+    const resp = await api.get('/template-excel', { responseType: 'arraybuffer' });
     const blob = new Blob([resp.data], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'template_simulado_acafe.xlsx';
+    link.setAttribute('download', 'template_simulado_acafe.xlsx');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
