@@ -40,7 +40,7 @@ async def root():
         "status": "online"
     }
 
-@app.post("/api/upload")
+@app.post("/upload")
 async def upload_arquivo(file: UploadFile = File(...)):
     """Upload e validação inicial do arquivo Excel"""
     
@@ -217,7 +217,7 @@ async def download_todos_pdfs(processo_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao criar ZIP: {str(e)}")
 
-@app.get("/template-excel")
+@app.get("/api/template-excel")
 async def download_template():
     """Download do template Excel"""
     file_path = os.path.join("static", "template_simulado_acafe.xlsx")
